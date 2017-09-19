@@ -153,15 +153,12 @@ define(["slycat-server-root", "slycat-web-client", "slycat-dialog", "slycat-mark
       var type = component.ps_type();
 
       if (type === "local") {
-        console.log("ps_type is local");
         component.upload_table();
       }
       else if (type == "server") {
-          console.log("ps_type is server");
           component.existing_table();
       }
       else if (type === "remote") {
-        console.log("ps_type is remote");
         component.connect();
       }
     };
@@ -230,7 +227,6 @@ define(["slycat-server-root", "slycat-web-client", "slycat-dialog", "slycat-mark
     component.existing_table = function() {
         //var file = component.browser.selection()[0];
         var fileName = component.selected_file;
-        console.log("In existing_table, checking the progress bar.");
         component.current_aids = fileName();
         //var file = new File([""], fileName())
         var csvData = component.csv_data();
@@ -242,7 +238,7 @@ define(["slycat-server-root", "slycat-web-client", "slycat-dialog", "slycat-mark
             pid: component.project._id(),
             mid: component.model._id(),
             file: blob,
-            aids: [["data-table"], component.current_aids],
+            aids: [["data-table"], component.current_aids, true], //If existing data, last value is true.
             parser: component.parser(),
             progress: component.browser.progress,
             progress_status: component.browser.progress_status,
@@ -270,7 +266,7 @@ define(["slycat-server-root", "slycat-web-client", "slycat-dialog", "slycat-mark
        mid: component.model._id(),
        file: file,
        //aids: [["data-table"]],
-       aids: [["data-table"], component.current_aids],
+       aids: [["data-table"], component.current_aids, false], //If new data, last value is false.
        parser: component.parser(),
        progress: component.browser.progress,
        progress_status: component.browser.progress_status,

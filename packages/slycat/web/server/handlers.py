@@ -664,7 +664,7 @@ def get_model(mid, **kwargs):
         context["slycat-project-name"] = project.get("name", "").replace("'", "\\'")
 
         context["slycat-css-bundle"] = css_bundle()
-        
+
         context["slycat-js-bundle"] = js_bundle()
 
         context["slycat-model-type"] = mtype

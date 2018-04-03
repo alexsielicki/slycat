@@ -397,6 +397,9 @@ rights in this software.
 #controls #filter-selector {
   width: 90px;
 }
+.ControlsGroup {
+  margin: 0px 2px;
+}
 /* Making text unselectable inside of the scatterplot because dragging usually is supposed to do other things,
    like selecting points or moving pins. */
 #scatterplot,

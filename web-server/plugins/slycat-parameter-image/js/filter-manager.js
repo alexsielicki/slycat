@@ -1,4 +1,11 @@
-define("slycat-parameter-image-filter-manager", ["slycat-server-root", "slycat-dialog", "lodash", "knockout", "knockout-mapping", "jquery"], function(server_root, dialog, _,  ko, mapping, $) {
+define("slycat-parameter-image-filter-manager", 
+  [
+    "../../../js/slycat-server-root", 
+    "../../../js/slycat-dialog-webpack", 
+    "lodash", 
+    "knockout", 
+    "knockout-mapping", 
+  ], function(server_root, dialog, _,  ko, mapping) {
 
   function FilterManager(model_id, bookmarker, layout, input_columns, output_columns, image_columns, rating_columns, category_columns) {
     var self = this;

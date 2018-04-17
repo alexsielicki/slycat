@@ -1,4 +1,8 @@
-define("slycat-parameter-image-note-manager", ["slycat-server-root", "jquery", "lodash"], function(server_root, $, _) {
+define("slycat-parameter-image-note-manager", 
+  [
+    "../../../js/slycat-server-root", 
+    "lodash"
+  ], function(server_root, _) {
 
   function NoteManager(model_id, bookmarker, bookmark) {
     var self = this;

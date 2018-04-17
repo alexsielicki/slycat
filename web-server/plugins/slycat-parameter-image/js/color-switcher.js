@@ -4,7 +4,11 @@ DE-AC04-94AL85000 with Sandia Corporation, the U.S. Government retains certain
 rights in this software.
 */
 
-define("slycat-color-switcher", ["d3"], function(d3)
+define("slycat-color-switcher", 
+  [
+    "./d3.min",
+    "jquery-ui",
+  ], function(d3)
 {
 
   $.widget("slycat.colorswitcher",

@@ -3,7 +3,7 @@ Copyright 2013, Sandia Corporation. Under the terms of Contract
 DE-AC04-94AL85000 with Sandia Corporation, the U.S. Government retains certain
 rights in this software.
 */
-var arrayset_metadata_cache = {};
+export var arrayset_metadata_cache = {};
 
 function is_little_endian()
 {
@@ -13,7 +13,7 @@ function is_little_endian()
 }
 
 // Retrieve an array attribute's metadata asynchronously, calling a callback when it's ready ...
-function get_model_array_attribute_metadata(parameters, dfd)
+export function get_model_array_attribute_metadata(parameters, dfd)
 {
   return $.ajax({
     url : parameters.server_root + "models/" + parameters.mid + "/arraysets/" + parameters.aid + "/metadata?arrays=" + parameters.array,
@@ -40,7 +40,7 @@ function get_model_array_attribute_metadata(parameters, dfd)
 
 // Cast a generic arraybuffer to a typed array, with an optional offset and
 // count.  Note that offset and count are measured in elements, not bytes.
-function cast_array_buffer(buffer, type, offset, count)
+export function cast_array_buffer(buffer, type, offset, count)
 {
   if(type == "int32")
   {
@@ -103,7 +103,7 @@ function cast_array_buffer(buffer, type, offset, count)
 }
 
 // Retrieve an array attribute asynchronously, calling a callback when it's ready ...
-function get_model_array_attribute(parameters) {
+export function get_model_array_attribute(parameters) {
   var dfd = $.Deferred();
   if(parameters.metadata === undefined) {
     parameters.metadataSuccess = retrieve_model_array_attribute;
@@ -120,7 +120,8 @@ function get_model_array_attribute(parameters) {
     var metadata = parameters.metadata;
     var attribute = parameters.attribute;
     var isStringAttribute = metadata.attributes[attribute].type == "string";
-    var byteorder = "&byteorder=" + (is_little_endian() ? "little" : "big");
+    // Assigning current scope's "this" to is_little_endian function, otherwise "this" is undefined in is_little_endian 
+    var byteorder = "&byteorder=" + (is_little_endian.call(this) ? "little" : "big");
     if(isStringAttribute)
     {
       byteorder = "";

@@ -576,6 +576,7 @@ def get_model(mid, **kwargs):
         context["slycat-project-name"] = project.get("name", "").replace("'", "\\'")
 
         context["slycat-css-bundle"] = css_bundle()
+        
         if "global_bundle" in model:
             if not model["global_bundle"]:
                 context["slycat-js-bundle"] = None

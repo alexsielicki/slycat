@@ -2,6 +2,9 @@
  DE-NA0003525 with National Technology and Engineering Solutions of Sandia, LLC, the U.S. Government
  retains certain rights in this software. */
 
+import ui_css from "../css/ui.css";
+import slycat_additions_css from "../css/slycat-additions.css";
+import jquery_ui_css from "../css/jquery-ui/jquery-ui.css";
 import server_root from "../../../js/slycat-server-root";
 import _ from "lodash";
 import ko from "knockout";

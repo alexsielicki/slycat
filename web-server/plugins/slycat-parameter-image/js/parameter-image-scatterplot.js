@@ -1593,6 +1593,7 @@ _open_images: function(images, is_stl_return)
               });
             self._adjust_leader_line(frame_html);
         });
+      
       } else if(blob.type.indexOf('video/') == 0) {
         // Create the video ...
         var video = frame_html
@@ -1715,8 +1716,75 @@ _open_images: function(images, is_stl_return)
           video.property("currentTime", image.currentTime);
         }
 
-      }
-      else if(isStl)
+      } else if(blob.type.indexOf('application/pdf') == 0) {
+        // Create the pdf ...
+        // Using an embed element
+        // var pdf = frame_html
+        //   .append("embed")
+        //   .attr("data-uri", image.uri)
+        //   .attr("src", image_url)
+        //   .attr("type", "application/pdf")
+        //   .attr("width", "100%")
+        //   .attr("height", "100%")
+        //   ;
+
+        // Let's use an object element instead
+        // var pdf = frame_html
+        //   .append("object")
+        //   .attr("data-uri", image.uri)
+        //   .attr("data", image_url)
+        //   .attr("type", "application/pdf")
+        //   .attr("width", "100%")
+        //   .attr("height", "100%")
+        //   ;
+
+        // iframe
+        // var pdf = frame_html
+        //   .append("iframe")
+        //   .attr("data-uri", image.uri)
+        //   .attr("src", image_url)
+        //   // .attr("type", "application/pdf")
+        //   .attr("width", "100%")
+        //   .attr("height", "100%")
+        //   .attr("frameborder", "0")
+        //   .append("a")
+        //   .attr("href", image_url)
+        //   .attr("class", "download-link")
+        //   .attr("download", "download")
+        //   .text("Download " + image.uri)
+        //   ;
+
+        // Using an <object> with an <iframe> fallback will reach the most users.
+        // https://pdfobject.com/static.html
+        var pdfWidth = 320;
+        var pdf = frame_html
+          // Overriding width and height to keep 8.5/11 ratio that's more applicable to PDFs
+          .style({
+            "width": pdfWidth + "px",
+            "height": (pdfWidth*(11/8.5))+10 + "px",
+          })
+          .attr("data-ratio", 8.5/11)
+          .append("object")
+          .attr("data-uri", image.uri)
+          .attr("data", image_url)
+          .attr("type", "application/pdf")
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .append("iframe")
+          .attr("data-uri", image.uri)
+          .attr("src", image_url)
+          // .attr("type", "application/pdf")
+          .attr("width", "100%")
+          .attr("height", "100%")
+          .attr("frameborder", "0")
+          .append("a")
+          .attr("href", image_url)
+          .attr("class", "download-link")
+          .attr("download", "download")
+          .text("Download " + image.uri)
+          ;
+
+      } else if(isStl)
       {
         var container = frame_html[0][0];
         var viewer = document.createElement('slycat-3d-viewer');

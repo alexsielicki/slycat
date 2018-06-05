@@ -9,6 +9,7 @@ module.exports = {
 	// mode: 'development',
   entry: {
     ui_parameter_image: './web-server/plugins/slycat-parameter-image/js/ui.js',
+    ui_timeseries:      './web-server/plugins/slycat-timeseries-model/js/ui.js',
     ui_run_command:     './web-server/plugins/slycat-run-command/ui.js',
     slycat_projects:    './web-server/js/slycat-projects-main.js',
     slycat_project:     './web-server/js/slycat-project-main.js',
@@ -52,7 +53,7 @@ module.exports = {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       },
-      // This enabled the URL loader for loading images
+      // This enabled the URL loader for loading images referenced in CSS files as url()
       {
         test: /\.(png|jpg|gif|jp(e*)g)$/,
         use: [
@@ -98,5 +99,12 @@ module.exports = {
       // chunks: 'all',
       chunks: 'async',
     }
+  },
+  // This configures webpack to look in the web-server directory for modules, after it looked in node_modules
+  resolve: {
+    modules: [
+      "node_modules", 
+      path.resolve(__dirname, "web-server"),
+    ],
   },
 };

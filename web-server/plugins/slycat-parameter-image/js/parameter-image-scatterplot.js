@@ -20,6 +20,7 @@ nodrag.on("dragstart", function() {
   // console.log("nodrag.on('dragstart'...");
   // d3.event.sourceEvent.stopPropagation();
 });
+
 $.widget("parameter_image.scatterplot",
 {
   options:
@@ -874,7 +875,8 @@ $.widget("parameter_image.scatterplot",
           square_size = self.options.canvas_selected_square_size,
           border_width = self.options.canvas_selected_square_border_size,
           half_border_width = border_width / 2,
-          fillWidth = fillHeight = square_size - (2 * border_width),
+          fillWidth = square_size - (2 * border_width),
+          fillHeight = fillWidth,
           strokeWidth = square_size - border_width
           strokeHeight = strokeWidth;
 

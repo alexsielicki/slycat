@@ -33,6 +33,9 @@ import "js/slycat-range-slider-webpack";
 import "./category-select";
 import "js/slycat-navbar-webpack"
 import * as slycat_model_main from "js/slycat-model-main-webpack";
+import React from "react";
+import ReactDOM from "react-dom";
+import FilterBar from './Components/filter-bar';
 
 // Wait for document ready
 $(document).ready(function() {
@@ -323,7 +326,6 @@ $(document).ready(function() {
 
     setup_controls();
     filter_manager.set_table_statistics(table_statistics);
-    filter_manager.build_sliders();
 
     if(table_metadata && bookmark)
     {
@@ -1381,6 +1383,7 @@ $(document).ready(function() {
   {
     var filter;
     var allFilters = filter_manager.allFilters;
+
     for(var i = 0; i < allFilters().length; i++)
     {
       filter = allFilters()[i];
@@ -1534,4 +1537,31 @@ $(document).ready(function() {
       update_widgets_when_hidden_simulations_change();
     }
   }
+
+  function setup_filter()
+  {
+    // console.log("activeFilters: ");
+    // console.log(filter_manager.active_filters);
+    console.log("allFilters");
+    console.log(filter_manager.allFilters()[0]);
+
+    const dropdown = [
+        {
+          id: 'filter-dropdown',
+          label: 'Filter',
+          title: 'Add Filter',
+          state_label: 'filter_variable',
+          trigger: 'activateFilter',
+          items: filter_manager.allFilters(),
+          selected: "test",
+        }];
+
+    const filter_bar = <FilterBar element={self.element}
+         dropdown={dropdown}
+         selection={null}
+       />;
+
+       self.filter_bar = ReactDOM.render(filter_bar, document.getElementById('test'));
+  }
+  setTimeout(setup_filter, 3000);
 });

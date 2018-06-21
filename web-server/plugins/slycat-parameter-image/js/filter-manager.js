@@ -107,6 +107,7 @@ FilterManager.prototype.build_sliders = function(controls_ready) {
         index: ko.observable( index ),
         active: ko.observable(false),
         categories: categories,
+        key: ko.observable( self.table_metadata["column-names"][index] ),
         selected: ko.pureComputed( function(){ 
             return _.filter(categories(), function(category) { return category.selected() === true; });
           })
@@ -137,12 +138,14 @@ FilterManager.prototype.build_sliders = function(controls_ready) {
         order: ko.observable( variable_order.indexOf(index) ),
         rateLimitedHigh: ko.pureComputed(high).extend({ rateLimit: { timeout: rateLimit, method: "notifyWhenChangesStop" } }),
         rateLimitedLow: ko.pureComputed(low).extend({ rateLimit: { timeout: rateLimit, method: "notifyWhenChangesStop" } }),
+        key: ko.observable( self.table_metadata["column-names"][index] ),
       });
     };
 
     var rateLimit = 500;
     if ("allFilters" in self.bookmark) {
       self.allFilters = mapping.fromJS(self.bookmark["allFilters"]);
+
       // Can't trust that bookmark contains accurare categorical/numeric type information, so must verify here
       for(var i=self.allFilters().length-1; i >= 0; i--) 
       {

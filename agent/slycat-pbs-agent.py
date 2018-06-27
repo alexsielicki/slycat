@@ -48,6 +48,7 @@ class Agent(agent.Agent):
         run_commands = []
         # get the command scripts that were sent to the agent
         jid = random.randint(10000000, 99999999)
+        log = self.create_job_logger(jid)
         for command_script in command["scripts"]:
             # compare the payload commands to the registered commands on the agent
             if command_script != "":
@@ -84,12 +85,12 @@ class Agent(agent.Agent):
                                 tmp_file)
             # with open(tmp_file.name, 'r') as myfile:
             #     data = myfile.read().replace('\n', '')
-            output[0], output[1] = self.run_shell_command("qsub %s" % tmp_file.name, jid, log_to_file=True)
+            output[0], output[1] = self.run_shell_command("qsub %s" % tmp_file.name, jid, True)
         else:
             try:
-                self.get_job_logger(jid)("[COMMAND length] %s" % len(run_commands))
+                log("[COMMAND length] %s" % len(run_commands))
                 for command in run_commands:
-                    self.get_job_logger(jid)("[COMMAND] %s" % command)
+                    log("[COMMAND] %s" % command)
                     background_thread = threading.Thread(target=self.run_shell_command, args=(command, jid, True,))
                     background_thread.start()
             except Exception as e:
@@ -116,7 +117,7 @@ class Agent(agent.Agent):
     def run_shell_command(self, command, jid=0, log_to_file=False):
         # create log file in the users directory for later polling
         if log_to_file:
-            log = self.get_job_logger(jid)
+            log = self.create_job_logger(jid)
         try:
             if log_to_file:
                 log("[STARTED]")

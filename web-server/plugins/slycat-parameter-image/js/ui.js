@@ -372,7 +372,7 @@ $(document).ready(function() {
         manually_hidden_simulations = bookmark["manually-hidden-simulations"];
 
       chunker.get_model_array_attribute({
-        server_root : api_root,
+        api_root : api_root,
         mid : model_id,
         aid : "data-table",
         array : 0,
@@ -391,7 +391,7 @@ $(document).ready(function() {
       });
 
       chunker.get_model_array_attribute({
-        server_root : api_root,
+        api_root : api_root,
         mid : model_id,
         aid : "data-table",
         array : 0,
@@ -426,7 +426,7 @@ $(document).ready(function() {
       else
       {
         chunker.get_model_array_attribute({
-          server_root : api_root,
+          api_root : api_root,
           mid : model_id,
           aid : "data-table",
           array : 0,
@@ -1098,7 +1098,7 @@ $(document).ready(function() {
   function update_v(variable)
   {
     chunker.get_model_array_attribute({
-      server_root : api_root,
+      api_root : api_root,
       mid : model_id,
       aid : "data-table",
       array : 0,
@@ -1320,7 +1320,7 @@ $(document).ready(function() {
   function update_scatterplot_x(variable)
   {
     chunker.get_model_array_attribute({
-      server_root : api_root,
+      api_root : api_root,
       mid : model_id,
       aid : "data-table",
       array : 0,
@@ -1340,7 +1340,7 @@ $(document).ready(function() {
   function update_scatterplot_y(variable)
   {
     chunker.get_model_array_attribute({
-      server_root : api_root,
+      api_root : api_root,
       mid : model_id,
       aid : "data-table",
       array : 0,

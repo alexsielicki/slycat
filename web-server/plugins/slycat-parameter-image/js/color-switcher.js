@@ -212,7 +212,7 @@ $.widget("slycat.colorswitcher",
     const dropdown = [
                 {
                     id: 'color-switcher',
-                    label: 'Color Scheme',
+                    label: 'Colors',
                     title: 'Change Color Scheme',
                     state_label: 'color',
                     trigger: 'colormap-changed',

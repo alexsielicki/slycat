@@ -29,6 +29,8 @@ import "jquery-ui";
 import "js/jquery.layout-latest.min";
 import "js/slycat-range-slider"; 
 import "./category-select";
+import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
 
 // Wait for document ready
 $(document).ready(function() {
@@ -989,6 +991,15 @@ $(document).ready(function() {
         }
         update_widgets_when_hidden_simulations_change();
         manually_hidden_simulations = hidden_simulations.slice();
+      });
+
+      // Log...
+      $("#controls").bind("screenshot", function(event, selection)
+      {
+          htmlToImage.toPng(document.getElementsByClassName("slycat-content")[0])
+              .then(function (dataUrl) {
+              download(dataUrl, 'screenshot.png');
+          });
       });
 
       // Log changes to hidden selection ...

@@ -43,6 +43,7 @@ class ControlsBar extends React.Component {
     this.trigger_pause = this.trigger_pause.bind(this);
     this.trigger_frame_forward = this.trigger_frame_forward.bind(this);
     this.trigger_jump_to_end = this.trigger_jump_to_end.bind(this);
+    this.trigger_screenshot = this.trigger_screenshot.bind(this);
   }
 
   set_selected(state_label, key, trigger, e) {
@@ -161,6 +162,9 @@ class ControlsBar extends React.Component {
     this.props.element.trigger("jump-to-end");
   }
 
+  trigger_screenshot(e) {
+    this.props.element.trigger("screenshot");
+  }
   render() {
     // Disable show all button when there are no hidden simulations or when the disable_hide_show functionality flag is on (set by filters)
     const show_all_disabled = this.state.hidden_simulations.length == 0 || this.state.disable_hide_show;
@@ -224,6 +228,7 @@ class ControlsBar extends React.Component {
         <ControlsGroup id="scatterplot-controls">
           {dropdowns}
         </ControlsGroup>
+
         <ControlsGroup id="selection-controls">
           <ControlsButtonToggle title="Auto Scale" icon="fa-external-link" active={this.state.auto_scale} set_active_state={this.set_auto_scale} />
           <ControlsSelection trigger_hide_selection={this.trigger_hide_selection} trigger_hide_unselected={this.trigger_hide_unselected}
@@ -237,12 +242,18 @@ class ControlsBar extends React.Component {
             aid={this.props.aid} mid={this.props.mid} model_name={this.props.model_name} metadata={this.props.metadata}
             indices={this.props.indices} />
         </ControlsGroup>
+
+        <ControlsGroup id="selection-controls">
+        <ControlsButton label="Screenshot" title="Screenshot" click={this.trigger_screenshot} />
+        </ControlsGroup>
+
         <ControlsGroup id="video-controls" class="input-group input-group-xs">
           <ControlsVideo video_sync={this.state.video_sync} set_video_sync={this.set_video_sync} video_sync_time_value={this.state.video_sync_time_value}
             set_video_sync_time_value={this.set_video_sync_time_value} set_video_sync_time={this.set_video_sync_time}
             any_video_open={any_video_open}
           />
         </ControlsGroup>
+
         <ControlsGroup id="playback-controls">
           <ControlsPlayback trigger_jump_to_start={this.trigger_jump_to_start} trigger_frame_back={this.trigger_frame_back} trigger_play={this.trigger_play}
             trigger_pause={this.trigger_pause} trigger_frame_forward={this.trigger_frame_forward} trigger_jump_to_end={this.trigger_jump_to_end}

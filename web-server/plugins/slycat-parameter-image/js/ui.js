@@ -994,13 +994,48 @@ $(document).ready(function() {
       });
 
       // Log...
-      $("#controls").bind("screenshot", function(event, selection)
-      {
-          htmlToImage.toPng(document.getElementsByClassName("slycat-content")[0])
-              .then(function (dataUrl) {
-              download(dataUrl, 'screenshot.png');
-          });
-      });
+      $("#controls").bind("screenshot", function (event, selection) {
+
+            var dataURL;
+
+            function convertURIToImageData(URL) {
+                return new Promise(function (resolve, reject) {
+                    if (URL === null) {
+                        return reject();
+                    }
+                    var canvas = document.createElement('canvas'),
+                        context = canvas.getContext('2d'),
+                        image = new Image();
+                    image.addEventListener('load', function () {
+                        canvas.width = image.width;
+                        canvas.height = image.height;
+                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                        resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+                    }, false);
+                    image.src = URL;
+                });
+            }
+
+            function filter(node) {
+                return (node.tagName !== 'i');
+            }
+
+            htmlToImage.toSvgDataURL(document.getElementsByClassName("slycat-content")[0], {filter: filter})
+                .then(function (dataUrl) {
+                    //console.log(dataUrl);
+
+                    var test_URI = dataUrl;
+                    convertURIToImageData(test_URI).then(function (imageData) {
+                        // Here you can use imageData
+                        console.log("Trying to log image data");
+                        console.log(imageData);
+                        console.log("Logged image data");
+
+                        download(imageData, 'test.png');
+                    });
+                  });
+
+        });
 
       // Log changes to hidden selection ...
       $("#controls").bind("close-all", function(event, selection)

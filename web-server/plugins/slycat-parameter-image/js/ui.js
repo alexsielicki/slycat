@@ -1020,6 +1020,18 @@ $(document).ready(function() {
                 return (node.tagName !== 'i');
             }
 
+            function imageData_to_image(imageData) {
+              var canvas = document.createElement('canvas');
+              var ctx = canvas.getContext('2d');
+              canvas.width = imageData.width;
+              canvas.height = imageData.height;
+              ctx.putImageData(imageData, 0, 0);
+
+              var image = new Image();
+              image.src = canvas.toDataURL();
+              return image;
+            }
+
             htmlToImage.toSvgDataURL(document.getElementsByClassName("slycat-content")[0], {filter: filter})
                 .then(function (dataUrl) {
                     //console.log(dataUrl);
@@ -1031,7 +1043,13 @@ $(document).ready(function() {
                         console.log(imageData);
                         console.log("Logged image data");
 
-                        download(imageData, 'test.png');
+                        var image = imageData_to_image(imageData);
+
+                        console.log("Converted image");
+                        console.log(image.src);
+                        console.log("Logged new image");
+
+                        download(image.src, 'image.png');
                     });
                   });
 

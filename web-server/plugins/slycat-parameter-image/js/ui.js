@@ -31,6 +31,7 @@ import "js/slycat-range-slider";
 import "./category-select";
 import * as htmlToImage from 'html-to-image';
 import download from 'downloadjs';
+import html2canvas from 'html2canvas';
 
 // Wait for document ready
 $(document).ready(function() {
@@ -995,63 +996,28 @@ $(document).ready(function() {
 
       // Log...
       $("#controls").bind("screenshot", function (event, selection) {
-
-            var dataURL;
-
-            function convertURIToImageData(URL) {
-                return new Promise(function (resolve, reject) {
-                    if (URL === null) {
-                        return reject();
-                    }
-                    var canvas = document.createElement('canvas'),
-                        context = canvas.getContext('2d'),
-                        image = new Image();
-                    image.addEventListener('load', function () {
-                        canvas.width = image.width;
-                        canvas.height = image.height;
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-                        resolve(context.getImageData(0, 0, canvas.width, canvas.height));
-                    }, false);
-                    image.src = URL;
-                });
+            function resizeTo(canvas,pct){
+              var tempCanvas=document.createElement("canvas");
+              var tctx=tempCanvas.getContext("2d");
+              var cw=canvas.width;
+              var ch=canvas.height;
+              tempCanvas.width=canvas.width;
+              tempCanvas.height=canvas.height;
+              tctx.drawImage(canvas,0,0);
+              canvas.width*=pct;
+              canvas.height*=pct;
+              var ctx=canvas.getContext('2d');
+              ctx.drawImage(tempCanvas,0,0,cw,ch,0,0,cw*pct,ch*pct);
             }
+            html2canvas(document.getElementsByClassName("slycat-content")[0]).then(
+              function(canvas) {
+                // canvas.width = 3820;
+                // canvas.height = 2610;
+                resizeTo(canvas, 3);
+                var canvasDataUrl = canvas.toDataURL("image/png")
+                download(canvasDataUrl, 'image.png');
 
-            function filter(node) {
-                return (node.tagName !== 'i');
-            }
-
-            function imageData_to_image(imageData) {
-              var canvas = document.createElement('canvas');
-              var ctx = canvas.getContext('2d');
-              canvas.width = imageData.width;
-              canvas.height = imageData.height;
-              ctx.putImageData(imageData, 0, 0);
-
-              var image = new Image();
-              image.src = canvas.toDataURL();
-              return image;
-            }
-
-            htmlToImage.toSvgDataURL(document.getElementsByClassName("slycat-content")[0], {filter: filter})
-                .then(function (dataUrl) {
-                    //console.log(dataUrl);
-
-                    var test_URI = dataUrl;
-                    convertURIToImageData(test_URI).then(function (imageData) {
-                        // Here you can use imageData
-                        console.log("Trying to log image data");
-                        console.log(imageData);
-                        console.log("Logged image data");
-
-                        var image = imageData_to_image(imageData);
-
-                        console.log("Converted image");
-                        console.log(image.src);
-                        console.log("Logged new image");
-
-                        download(image.src, 'image.png');
-                    });
-                  });
+              });
 
         });
 

@@ -29,8 +29,8 @@
     "three-stl-loader": "1.0.6",
     "three-trackballcontrols": "0.0.7",
     "urijs": "1.19.1",
-    "html-to-image":"0.1.0",
-    "downloadjs":"1.4.7"
+    "downloadjs": "1.4.7",
+    "html2canvas": "*"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
